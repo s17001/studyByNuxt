@@ -88,9 +88,9 @@
         <option value="$PROJECT_DIR$/pages/users/refister.vue" />
         <option value="$PROJECT_DIR$/pages/users/index.vue" />
         <option value="$PROJECT_DIR$/pages/users/_id.vue" />
-        <option value="$PROJECT_DIR$/pages/index.vue" />
         <option value="$PROJECT_DIR$/plugins/axios.js" />
         <option value="$PROJECT_DIR$/nuxt.config.js" />
+        <option value="$PROJECT_DIR$/pages/index.vue" />
       </list>
     </option>
   </component>
