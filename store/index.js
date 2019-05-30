@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 
-export default () => (new Vuex.Store({
+  const store = {
     state : {
       items : [],
       users : {},
@@ -15,8 +15,8 @@ export default () => (new Vuex.Store({
       setItems (state,{ items }) {
         state.items = items
       },
-      setUsers (state,{ user }) {
-        state.user[user.id] = user
+      setUser (state,{ user }) {
+        state.users[user.id] = user
       },
       setUserItems (state,{ user , items }) {
         state.userItems[user.id] = items
@@ -24,8 +24,9 @@ export default () => (new Vuex.Store({
     },
     actions : {
       async fetchItems ({ commit }) {
-        const items =
-          await this.$axios.$get('https://qiita.com/api/v2/items?query=tag:nuxt.js')
+        const items = await this.$axios.$get(
+        'https://qiita.com/api/v2/items?query=tag:nuxt.js'
+        );
         commit('setItems', { items })
       },
       async fetchUserInfo ({ commit }, { id }) {
@@ -37,5 +38,6 @@ export default () => (new Vuex.Store({
         commit('setUserItems' , { user , items })
       }
     }
-  })
-)
+  }
+
+export default () => new Vuex.Store(store);
