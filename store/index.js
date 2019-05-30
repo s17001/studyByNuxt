@@ -4,7 +4,7 @@ export default () =>
   new Vuex.Store({
     state : {
       items : [],
-      ysers : {},
+      users : {},
       userItems : {}
     },
     getters : {
