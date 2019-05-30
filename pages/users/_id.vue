@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <dev>
-      <h3>{{user.id}}</h3>
+      <h3>{{user}}</h3>
       <img :src="user.profile_image_url" width="120" alt="">
       <p>{{user.description || 'No description'}}</p>
       <p>
@@ -9,7 +9,7 @@
           <small><b>トップへ戻る</b></small>
         </nuxt-link>
       </p>
-      <h3>{{user.id}}さんの投稿の一覧</h3>
+      <h3>{{user}}さんの投稿の一覧</h3>
       <ul>
         <li v-for="item in items" :key="item.id">
           <h4><span>{{item.title}}</span></h4>
@@ -22,14 +22,32 @@
 </template>
 
 <script>
-
+  import {mapGetters} from 'vuex'
 
   export default {
-    async asyncData({ route, app }) {
-      const user = await app.$axios.$get(`https://qiita.com/api/v2/users/${route.params.id}`)
-      const items = await app.$axios.$get(`https://qiita.com/api/v2/items?query=user:${route.params.id}`)
-
-      return {user,items}
+    head () {
+      return {
+        title : this.user,
+      }
+    },
+    async asyncData({ route, store , redirect }) {
+      if (store.getters['users'][route.params.id]) {
+        return
+      }
+      try {
+        await store.dispatch('fetchUserInfo' , { id : route.params.id })
+      } catch (e) {
+        redirect('/')//404時にリダイレクト
+      }
+    },
+    computed : {
+      user () {
+        return (this.users)[this.$route.params]
+      },
+      items () {
+        return (this.userItems)[this.$route.params.id] || []
+      },
+      ...mapGetters(['users' , 'usersItems'])
     }
   }
 </script>
